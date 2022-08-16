@@ -77,11 +77,8 @@ CREATE TABLE Cart (
 CREATE TABLE Upload_File (
 	fileNo				VARCHAR2(100)		NOT NULL,
 	fileCount			NUMBER(20)			NOT NULL,
-	fileName1			VARCHAR2(100)		NOT NULL,
-	fileName2			VARCHAR2(100),
-	fileName3			VARCHAR2(100),
-	fileName4			VARCHAR2(100),
-	fileName5			VARCHAR2(100)
+	fileName			VARCHAR2(100)		NOT NULL,
+	file_path			varchar2(200)
 );
 
 

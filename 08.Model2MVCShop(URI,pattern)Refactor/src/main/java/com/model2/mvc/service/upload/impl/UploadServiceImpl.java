@@ -1,5 +1,7 @@
 package com.model2.mvc.service.upload.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -21,13 +23,13 @@ public class UploadServiceImpl implements UploadService {
 	}
 
 	@Override
-	public void addUpload(Upload upload, Upload_Sub upload_sub) throws Exception {
+	public void addUpload(Upload upload) throws Exception {
 		System.out.println(getClass() + ".addUpload(Upload upload) start...");
-		UploadDaoImpl.addUpload(upload, upload_sub);
+		UploadDaoImpl.addUpload(upload);
 	}
 
 	@Override
-	public Upload getUploadFile(String fileName) throws Exception {
+	public List<Upload> getUploadFile(String fileName) throws Exception {
 		System.out.println(getClass() + ".getUploadFile(String fileName) start...");
 		return UploadDaoImpl.getUploadFile(fileName);
 	}

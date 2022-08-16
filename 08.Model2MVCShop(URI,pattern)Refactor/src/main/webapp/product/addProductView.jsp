@@ -53,14 +53,14 @@ function fn_addFile(){
 	}else{
 		cnt++;
 		var input1 = document.createElement('input');
-		var br1 = document.createElement('br');
+		var brCreate = document.createElement('br');
 		input1.setAttribute("type", "file");
 		input1.setAttribute("name", "uploadfile");
 		input1.setAttribute("value", "value"+cnt);
 		input1.setAttribute("class", "ct_input_g");
 		input1.setAttribute("style", "width: 200px; height: 19px");
 		input1.setAttribute("maxLength", "13");
-		document.getElementById('createInput').appendChild(br1);
+		document.getElementById('createInput').appendChild(brCreate);
 		document.getElementById('createInput').appendChild(input1);
 	}
 }

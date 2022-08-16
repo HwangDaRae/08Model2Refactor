@@ -294,76 +294,41 @@ public class ProductController {
 	}
 	*/
 
-	///*
 	@RequestMapping(value = "addProduct", method = RequestMethod.POST)
 	public String addProduct(@ModelAttribute Product productVO,
 							@RequestParam("uploadfile") List<MultipartFile> multiFileList,
 							HttpServletRequest request,
 							Upload uploadVO,
-							Upload_Sub uploadSubVO,
-							ArrayList<String> fileName ) throws Exception {
+							ArrayList<Upload> fileList ) throws Exception {
 		System.out.println("/product/addProduct : POST");
-		
-		
-		// File file = new File(경로 + 파일이름);
-		for(int i = 0; i < multiFileList.size(); i++) {
-			multiFileList.get(i).transferTo(new File("C:\\Users\\bitcamp\\git\\07Model2Refactor\\07.Model2MVCShop(URI,pattern)Refactor\\src\\main\\webapp\\images\\uploadFiles\\",
-					multiFileList.get(i).getOriginalFilename()));
-		}
-		
-		int size = multiFileList.size();
-		switch (size) {
-		case 1:
-			uploadSubVO.setFileName1(multiFileList.get(0).getOriginalFilename());
-			break;
-		case 2:
-			uploadSubVO.setFileName1(multiFileList.get(0).getOriginalFilename());
-			uploadSubVO.setFileName2(multiFileList.get(1).getOriginalFilename());
-			break;
-		case 3:
-			uploadSubVO.setFileName1(multiFileList.get(0).getOriginalFilename());
-			uploadSubVO.setFileName2(multiFileList.get(1).getOriginalFilename());
-			uploadSubVO.setFileName3(multiFileList.get(2).getOriginalFilename());
-			break;
-		case 4:
-			uploadSubVO.setFileName1(multiFileList.get(0).getOriginalFilename());
-			uploadSubVO.setFileName2(multiFileList.get(1).getOriginalFilename());
-			uploadSubVO.setFileName3(multiFileList.get(2).getOriginalFilename());
-			uploadSubVO.setFileName4(multiFileList.get(3).getOriginalFilename());
-			break;
-		case 5:
-			uploadSubVO.setFileName1(multiFileList.get(0).getOriginalFilename());
-			uploadSubVO.setFileName2(multiFileList.get(1).getOriginalFilename());
-			uploadSubVO.setFileName3(multiFileList.get(2).getOriginalFilename());
-			uploadSubVO.setFileName4(multiFileList.get(3).getOriginalFilename());
-			uploadSubVO.setFileName5(multiFileList.get(4).getOriginalFilename());
-			break;
-		}
 		
 		//고유번호 생성
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMddHHmmss");
 		String fileNo = sdf1.format( Calendar.getInstance().getTime() ) + "";
 		
-		uploadVO.setFileNo(fileNo);
-		uploadVO.setFileName(fileName);
-		uploadVO.setFileCount(multiFileList.size());
+		for(int i = 0; i < multiFileList.size(); i++) {
+			multiFileList.get(i).transferTo(new File("C:\\Users\\bitcamp\\git\\08Refactor\\08.Model2MVCShop(URI,pattern)Refactor\\src\\main\\webapp\\images\\uploadFiles\\",
+					multiFileList.get(i).getOriginalFilename()));
+			uploadVO = new Upload();
+			uploadVO.setFileNo(fileNo);
+			uploadVO.setFileCount(multiFileList.size());
+			uploadVO.setFileName(multiFileList.get(i).getOriginalFilename());
+			uploadVO.setFile_path("C:\\Users\\bitcamp\\git\\08Refactor\\08.Model2MVCShop(URI,pattern)Refactor\\src\\main\\webapp\\images\\uploadFiles");
+			fileList.add(uploadVO);
+		}
 		
-		System.out.println("uploadVO : " + uploadVO);
-		System.out.println("uploadSubVO : " + uploadSubVO);
-		
-		productVO.setFileName(fileNo);
-		///*
+		productVO.setFileName(fileNo);		
 		productServiceImpl.addProduct(productVO);
-		uploadServiceImpl.addUpload(uploadVO, uploadSubVO);
+		for (Upload upload : fileList) {
+			uploadServiceImpl.addUpload(upload);
+		}
 		
 		request.setAttribute("productVO", productVO);
-		request.setAttribute("uploadVO", uploadVO);
+		request.setAttribute("fileList", fileList);
 		request.setAttribute("count", uploadVO.getFileCount());
-		//*/
 		
 		return "forward:/product/addProduct.jsp";
 	}
-	//*/
 	
 	@RequestMapping(value = "updateProductView/{prodNo}/{menu}", method = RequestMethod.GET )
 	public String updateProductView(@PathVariable int prodNo, @PathVariable String menu, Model model) throws Exception {
@@ -372,13 +337,13 @@ public class ProductController {
 		System.out.println("menu : " + menu);
 		
 		Product productVO = productServiceImpl.getProduct(prodNo);
-		Upload uploadVO = uploadServiceImpl.getUploadFile(productVO.getFileName());
+		List<Upload> uploadList = uploadServiceImpl.getUploadFile(productVO.getFileName());
 		
-		System.out.println("uploadVO : " + uploadVO);
+		//System.out.println("uploadVO : " + uploadVO);
 		
-		model.addAttribute("productVO", productVO);
-		model.addAttribute("uploadVO", uploadVO);
-		model.addAttribute("count", uploadVO.getFileCount());
+		//model.addAttribute("productVO", productVO);
+		//model.addAttribute("uploadVO", uploadVO);
+		//model.addAttribute("count", uploadVO.getFileCount());
 		
 		if( menu.equals("manage") && productVO.getProTranCode() == null ) {
 			return "forward:/product/updateProductView.jsp";

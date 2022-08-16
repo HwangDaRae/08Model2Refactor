@@ -1,21 +1,21 @@
 package com.model2.mvc.service.domain;
 
-import java.util.List;
-
 public class Upload {
 	
 	private String fileNo;
 	private int fileCount;
-	private List<String> fileName;
+	private String fileName;
+	private String file_path;
 	
 	public Upload() {
 	}
 
-	public Upload(String fileNo, int fileCount, List<String> fileName) {
+	public Upload(String fileNo, int fileCount, String fileName, String file_path) {
 		super();
 		this.fileNo = fileNo;
 		this.fileCount = fileCount;
 		this.fileName = fileName;
+		this.file_path = file_path;
 	}
 
 	public String getFileNo() {
@@ -34,12 +34,20 @@ public class Upload {
 		this.fileCount = fileCount;
 	}
 
-	public List<String> getFileName() {
+	public String getFileName() {
 		return fileName;
 	}
 
-	public void setFileName(List<String> fileName) {
+	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+
+	public String getFile_path() {
+		return file_path;
+	}
+
+	public void setFile_path(String file_path) {
+		this.file_path = file_path;
 	}
 
 	@Override
@@ -51,6 +59,8 @@ public class Upload {
 		builder.append(fileCount);
 		builder.append(", fileName=");
 		builder.append(fileName);
+		builder.append(", file_path=");
+		builder.append(file_path);
 		builder.append("]");
 		return builder.toString();
 	}

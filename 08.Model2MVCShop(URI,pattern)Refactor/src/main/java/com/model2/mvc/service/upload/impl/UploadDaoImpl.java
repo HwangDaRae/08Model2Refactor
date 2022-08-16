@@ -1,6 +1,7 @@
 package com.model2.mvc.service.upload.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -24,18 +25,15 @@ public class UploadDaoImpl implements UploadDao {
 	}
 
 	@Override
-	public void addUpload(Upload upload, Upload_Sub upload_sub) throws Exception {
-		System.out.println(getClass() + ".addUpload(Upload upload, Upload_Sub upload_sub) start...");
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("upload", upload);
-		map.put("upload_sub", upload_sub);
-		sqlSession.insert("UploadMapper.addUpload", map);
+	public void addUpload(Upload upload) throws Exception {
+		System.out.println(getClass() + ".addUpload(Upload upload) start...");
+		sqlSession.insert("UploadMapper.addUpload", upload);
 	}
 
 	@Override
-	public Upload getUploadFile(String fileName) throws Exception {
+	public List<Upload> getUploadFile(String fileName) throws Exception {
 		System.out.println(getClass() + ".getUpload(String fileName) start...");
-		return sqlSession.selectOne("UploadMapper.getUploadFile", fileName);
+		return sqlSession.selectList("UploadMapper.getUploadFile", fileName);
 	}
 
 	@Override
