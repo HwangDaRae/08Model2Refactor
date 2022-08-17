@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.UUID;
 
@@ -23,9 +25,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.model2.mvc.common.Page;
@@ -39,7 +43,7 @@ import com.model2.mvc.service.product.ProductService;
 import com.model2.mvc.service.product.impl.ProductServiceImpl;
 import com.model2.mvc.service.upload.UploadService;
 
-@Controller
+@RestController
 @RequestMapping("/product/*")
 public class ProductController {
 	
@@ -65,8 +69,8 @@ public class ProductController {
 	//@Value("#{commonProperties['pageSize'] ?: 2}")
 	int pageSize;
 							  
-	@RequestMapping(value = "listProduct/{menu}", method = RequestMethod.GET) /* @RequestParam String menu, */
-	public String listProduct( @PathVariable String menu, Model model, HttpSession session, Search search) throws Exception {
+	@RequestMapping(value = "listProduct/{menu}", method = RequestMethod.GET)
+	public Map<String, Object> listProduct( @PathVariable String menu, HttpSession session, Search search) throws Exception {
 		System.out.println("/product/listProduct : GET");
 		System.out.println(search);
 		System.out.println(menu);
@@ -108,17 +112,18 @@ public class ProductController {
 			System.out.println(getClass() + " : " + prodList.get(i).toString());
 		}
 		
-		model.addAttribute("resultPage", resultPage);
-		model.addAttribute("searchVO", search);
-		model.addAttribute("list", prodList);
-		model.addAttribute("listSize", prodList.size());
-		model.addAttribute("menu", menu);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("resultPage", resultPage);
+		map.put("searchVO", search);
+		map.put("list", prodList);
+		map.put("listSize", prodList.size());
+		map.put("menu", menu);
 		
-		return "forward:/product/listProduct.jsp";
+		return map;
 	}
 	
 	@RequestMapping( value = "listProduct", method = RequestMethod.POST )
-	public String listProduct( @RequestParam("menu") String menu, Model model, User user, HttpSession session, Search search) throws Exception {
+	public Map<String, Object> listProduct( @RequestBody String menu, User user, HttpSession session, Search search) throws Exception {
 		System.out.println("/product/listProduct : POST");
 		System.out.println(search);
 		System.out.println(user);
@@ -161,20 +166,20 @@ public class ProductController {
 			System.out.println(getClass() + " : " + prodList.get(i).toString());
 		}
 		
-		model.addAttribute("resultPage", resultPage);
-		model.addAttribute("searchVO", search);
-		model.addAttribute("list", prodList);
-		model.addAttribute("listSize", prodList.size());
-		model.addAttribute("menu", menu);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("resultPage", resultPage);
+		map.put("searchVO", search);
+		map.put("list", prodList);
+		map.put("listSize", prodList.size());
+		map.put("menu", menu);
 		
-		return "forward:/product/listProduct.jsp";
+		return map;
 	}
 	
 	@RequestMapping( value = "getProduct/{prodNo}/{menu}", method = RequestMethod.GET )
-	public String getProduct(@PathVariable int prodNo, @PathVariable String menu, Model model ) throws Exception {
+	public Product getProduct(@PathVariable int prodNo, @PathVariable String menu ) throws Exception {
 		System.out.println("/getProduct : GET");
-		model.addAttribute("productVO", productServiceImpl.getProduct(prodNo));
-		return "forward:/product/getProduct.jsp";
+		return productServiceImpl.getProduct(prodNo);
 	}
 	
 	@RequestMapping( value = "addProductView", method = RequestMethod.GET )
@@ -220,20 +225,21 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value = "updateProductView/{prodNo}/{menu}", method = RequestMethod.GET )
-	public String updateProductView(@PathVariable int prodNo, @PathVariable String menu, Model model) throws Exception {
+	public Map<String, Object> updateProductView(@PathVariable int prodNo, @PathVariable String menu) throws Exception {
 		System.out.println("/product/updateProductView : GET");
 		
 		Product productVO = productServiceImpl.getProduct(prodNo);
 		List<Upload> uploadList = uploadServiceImpl.getUploadFile(productVO.getFileName());
 		
-		model.addAttribute("productVO", productVO);
-		model.addAttribute("uploadList", uploadList);
-		model.addAttribute("count", uploadList.size());
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("productVO", productVO);
+		map.put("uploadList", uploadList);
+		map.put("count", uploadList.size());
 		
 		if( menu.equals("manage") && productVO.getProTranCode() == null ) {
-			return "forward:/product/updateProductView.jsp";
+			return map;
 		}else {
-			return "forward:/product/getProduct.jsp";
+			return map;
 		}
 	}
 	

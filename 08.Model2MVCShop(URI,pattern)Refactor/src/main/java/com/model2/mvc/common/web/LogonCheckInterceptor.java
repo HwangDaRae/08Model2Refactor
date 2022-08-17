@@ -68,7 +68,7 @@ public class LogonCheckInterceptor extends HandlerInterceptorAdapter {
 				System.out.println("[ 로그 시도 상태 .... ]");
 				System.out.println("[ LogonCheckInterceptor end........]\n");
 				return true;
-			}else if( uri.indexOf("listProduct") != -1 || uri.indexOf("getProduct") != -1 ) {
+			}else if( uri.indexOf("listProduct") != -1 || uri.indexOf("getProduct") != -1 || uri.indexOf("updateProductView") != -1 ) {
 				System.out.println("[ 비회원 product ]");
 				return true;
 			}else if( uri.indexOf("addCart") != -1 || uri.indexOf("listCart") != -1 || uri.indexOf("deleteCart") != -1 || uri.indexOf("deliveryCart") != -1 ) {

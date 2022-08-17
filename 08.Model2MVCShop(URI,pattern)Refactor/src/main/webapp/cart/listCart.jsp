@@ -196,11 +196,17 @@ function cartTransaction(){
 								<td></td>
 								<td align="left">
 									<input type="button" value="-" class="btn_minus" onclick='count("minus,${ i },${ size }")'>
+									
 									<b id="result_${ i }">${ list[i].amount }</b>
+									
 									<input type="text" id="amount_${ i }" name="amount" value="${ list[i].amount }">
+									
 									<input type="text" id="prodAmount_${ i }" name="prodAmount" value="${ list[i].prod_amount }">
+									
 									<input type="text" id="addPurchaseCheckBox" name="addPurchaseCheckBox" value="${ list[i].prod_no }">
+									
 									<input type="button" value="+" class="btn_plus" onclick='count("plus,${ i },${ size }")'>
+									
 									<b id="limit_${ i }"></b>
 								</td>
 								<td></td>
