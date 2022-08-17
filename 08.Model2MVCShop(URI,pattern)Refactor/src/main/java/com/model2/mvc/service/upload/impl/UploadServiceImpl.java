@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.model2.mvc.service.domain.Upload;
-import com.model2.mvc.service.domain.Upload_Sub;
 import com.model2.mvc.service.upload.UploadDao;
 import com.model2.mvc.service.upload.UploadService;
 
@@ -35,9 +34,9 @@ public class UploadServiceImpl implements UploadService {
 	}
 
 	@Override
-	public Upload updateUpload(Upload upload, Upload_Sub upload_sub) throws Exception {
-		System.out.println(getClass() + ".updateUpload(Upload upload, Upload_Sub upload_sub) start...");
-		return UploadDaoImpl.updateUpload(upload, upload_sub);
+	public void updateUpload(Upload upload) throws Exception {
+		System.out.println(getClass() + ".updateUpload(Upload upload) start...");
+		UploadDaoImpl.updateUpload(upload);
 	}
 
 }

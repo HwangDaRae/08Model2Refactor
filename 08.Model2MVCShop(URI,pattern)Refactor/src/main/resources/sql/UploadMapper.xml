@@ -25,11 +25,10 @@
 		WHERE fileNo = #{value}
 	</select>
 	
-	<update id="updateUpload" parameterType="map">
+	<update id="updateUpload" parameterType="com.model2.mvc.service.domain.Upload">
 		UPDATE upload_file
-		SET fileCount = #{upload.fileCount}, fileName1 = #{upload_sub.fileName1}, fileName2 = #{upload_sub.fileName2:VARCHAR}
-			, fileName3 = #{upload_sub.fileName3:VARCHAR}, fileName4 = #{upload_sub.fileName4:VARCHAR}, fileName5 = #{upload_sub.fileName5:VARCHAR}
-		WHERE fileNo = #{upload.fileNo}
+		SET fileCount = #{fileCount}, fileName = #{fileName:VARCHAR}, file_path=#{file_path:VARCHAR}
+		WHERE fileNo = #{fileNo} AND fileName = #{before_fileName}
 	</update>
 
 </mapper>

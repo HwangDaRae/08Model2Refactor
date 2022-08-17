@@ -104,7 +104,7 @@
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td height="26">
-						<c:forEach var="i" items="${ fileList }" begin="0" end="${ count-1 }" step="1">
+						<c:forEach var="i" items="${ uploadList }" begin="0" end="${ count-1 }" step="1">
 							<img src="/images/uploadFiles/${ i.fileName }"/><br/>
 							${ i.fileName }<br/><hr/>
 						</c:forEach>

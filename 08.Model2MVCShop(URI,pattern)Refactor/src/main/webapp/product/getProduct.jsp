@@ -130,24 +130,6 @@ response.addCookie(cookie);
 	</tr>
 	<tr>
 		<td width="104" class="ct_write">
-			상품이미지 <img 	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
-		</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<table border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td height="26">
-						<img src="/images/uploadFiles/${ productVO.fileName }"/>
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	<tr>
-		<td width="104" class="ct_write">
 			상품상세정보 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
@@ -192,6 +174,34 @@ response.addCookie(cookie);
 			<input type="button" value="+" onclick='count("plus")'>
 			<b id="limit"></b>
 		</td>
+	</tr>
+	<tr>
+		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+	</tr>
+	<tr>
+		<td width="104" class="ct_write">
+			상품이미지 <img 	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
+		</td>
+		<td bgcolor="D6D6D6" width="1"></td>
+		<td class="ct_write01">
+		</td>
+		<!-- 테이블 시작 -->
+		<table border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td height="26">
+					<c:if test="${ count > 0 }">
+						<c:forEach var="i" items="${ uploadList }" begin="0" step="1" end="${ count-1 }">
+							<b id="123">
+								<img src="/images/uploadFiles/${ i.fileName }"/><br/>
+								<input type="file" name="uploadfile" value="파일수정" class="ct_input_g" style="width: 200px; height: 19px" maxLength="13">
+								<input type="button" value="파일삭제" onclick="removeFile(this)">
+								${ i.fileName }<br/>
+							</b>
+						</c:forEach>
+					</c:if>
+				</td>
+			</tr>
+		</table>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>

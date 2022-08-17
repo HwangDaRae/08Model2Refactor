@@ -6,6 +6,7 @@ public class Upload {
 	private int fileCount;
 	private String fileName;
 	private String file_path;
+	private String before_fileName;
 	
 	public Upload() {
 	}
@@ -50,6 +51,14 @@ public class Upload {
 		this.file_path = file_path;
 	}
 
+	public String getBefore_fileName() {
+		return before_fileName;
+	}
+
+	public void setBefore_fileName(String before_fileName) {
+		this.before_fileName = before_fileName;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -61,6 +70,8 @@ public class Upload {
 		builder.append(fileName);
 		builder.append(", file_path=");
 		builder.append(file_path);
+		builder.append(", before_fileName=");
+		builder.append(before_fileName);
 		builder.append("]");
 		return builder.toString();
 	}
